@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            <%include file="bulma.min.css"/>
+        </style>
+        <style>
+            th
+            {
+                text-align: left;
+            }
+
+            img
+            {
+                width: 250px;
+                height: 250px;
+            }
+
+            .table.is-borderless td, .table.is-borderless th 
+            {
+                border: 0;
+            }
+        </style>
+    </head>
+    <body class="ml-2 mt-2 mr-2">
+        Dear ${hp_name | h},
+
+        <section class="section pt-2">    
+            <p>
+                Please arrange to send repeat <span class="is-italic is-underlined has-text-weight-bold">${sample_type | h}</span> sample ${duration | h} of the following person as the sample got spoiled during analysis
+            </p>
+        </section>
+
+        <div class="columns">
+            <div class="column">
+
+                <!--    Personal details    -->
+
+                <div class="card">
+                    <div class="card-header has-background-light">
+                        <p class="card-header-title">Personal details</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="columns is-gapless">
+                            <div class="column">
+                                <img src="${img_src}">
+                            </div>
+                            <div class="column">
+                                <div class="columns is-gapless">
+                                    <div class="column has-text-weight-bold">Name</div>
+                                    <div class="column">${person_name | h}</div>
+                                </div>
+                                <div class="columns is-gapless">
+                                    <div class="column has-text-weight-bold">Gender</div>
+                                    <div class="column">${person_gender | h}</div>
+                                </div>
+                                <div class="columns is-gapless">
+                                    <div class="column has-text-weight-bold">DOB</div>
+                                    <div class="column">${dob | h}</div>
+                                </div>
+                                <div class="columns is-gapless">
+                                    <div class="column has-text-weight-bold">DOJ</div>
+                                    <div class="column">${doj | h}</div>
+                                </div>
+                                <div class="columns is-gapless">
+                                    <div class="column has-text-weight-bold">Emp no.</div>
+                                    <div class="column">${empno_no | h}</div>
+                                </div>
+                                <div class="columns is-gapless">
+                                    <div class="column has-text-weight-bold">Organisation</div>
+                                    <div class="column">${organisation | h}</div>
+                                </div>
+                                <div class="columns is-gapless">
+                                    <div class="column has-text-weight-bold">Worker type</div>
+                                    <div class="column">${worker_type | h}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+
+            <!--    10H form details    -->
+
+            <div class="column">
+                <div class="card">
+                    <div class="card-header has-background-primary-light">
+                        <p class="card-header-title">10H form details</p>
+                    </div>
+                    <div class="card-content">
+
+                        <table class="table is-fullwidth is-borderless">
+                            <tbody>
+                                <tr>
+                                    <th>Form id</th>
+                                    <td>${form_id | h}</td>
+                                </tr>
+                                <tr>
+                                    <th>Division</th>
+                                    <td>${division | h}</td>
+                                </tr>
+                                <tr>
+                                    <th>Plant</th>
+                                    <td>${plant | h}</td>
+                                </tr>
+                                <tr>
+                                    <th>HP token</th>
+                                    <td>${hp_token | h}</td>
+                                </tr>
+                                <tr>
+                                    <th>TLD</th>
+                                    <td>${tld | h}</td>
+                                </tr>
+                                <tr>
+                                    <th>Requested by</th>
+                                    <td>${request_by | h}</td>
+                                </tr>
+                                <tr>
+                                    <th>Form submission on</th>
+                                    <td>${submission_date | h}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nuclides handled</th>
+                                    <td>${nuclides_handled | h}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+        <br/>
+        <p>Thank you</p><br/>
+        <p>Regards</p>
+        <p class="ml-6">Bioassay Lab</p>
+    </body>
+</html>

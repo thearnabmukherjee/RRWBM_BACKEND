@@ -1,0 +1,150 @@
+## -*- coding: utf-8 -*-
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            <%include file="bulma.min.css"/>
+        </style>
+        <style>
+            th
+            {
+                text-align: left;
+            }
+
+            img
+            {
+                width: 200px;
+                height: 50px;
+            }
+
+            .table.is-borderless td, .table.is-borderless th 
+            {
+                border: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <p class="is-fullwidth has-text-centered subtitle mb-0 has-text-weight-bold">BHABHA ATOMIC RESEARCH CENTRE</p>
+        <p class="is-fullwidth has-text-centered subtitle mb-0 has-text-weight-bold is-uppercase">${my_division | h}</p>
+        <p class="is-fullwidth has-text-centered subtitle has-text-weight-bold is-uppercase">${my_section | h}</p>
+        <div class="columns is-gapless mb-0">
+            <div class="column has-text-left">
+                <p class="subtitle has-text-weight-bold mb-0 is-uppercase">Report no: TR\BA\${report_id}</p>
+                <p class="subtitle has-text-weight-bold is-uppercase">Division: ${selected_division | h}</p>
+            </div>
+            <div class="column has-text-right">
+                <p class="subtitle has-text-weight-bold mb-0 is-uppercase">Date: ${report_gen_date.strftime('%d-%m-%Y')}</p>
+            </div>
+        </div>
+
+        <p class="is-fullwidth has-text-centered subtitle mb-0 has-text-weight-bold is-uppercase">Bioassay report:- ${report_month}</p>
+        <p class="is-fullwidth has-text-centered subtitle mb-0 has-text-weight-bold is-uppercase">Routine monitoring</p>
+        <br/>
+
+        <table class="table is-bordered is-narrow is-fullwidth" style="border: 1px solid black">
+            <thead>
+                <tr>
+                    <th>SAMPLE NO.</th>
+                    <th style="min-width: 200px;">NAME</th>
+                    <th>TLD. NO.</th>
+                    <th style="min-width: 100px;">DATE OF SAMPLE COLLECTION</th>
+                    <th>RADIONUCLIDES ANALYZED</th>
+                    <th>METHOD OF ANALYSIS</th>
+                    <th style="min-width: 150px;">ACTIVITY mBq/24h ± 1σ</th>
+                    <th style="min-width: 150px;">REMARKS</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                % for row in rows:
+                    % for idx, frag in enumerate(row['rows']):
+
+                    <tr class="has-text-justified">
+                        % if idx == 0:
+                            <td rowspan="${len(row['rows'])}">${row['sample_no']}</td>
+                            <td rowspan="${len(row['rows'])}" class="is-uppercase">${row['person_name']}</td>
+                            <td rowspan="${len(row['rows'])}">${row['tld']}</td>
+                            <td rowspan="${len(row['rows'])}">${row['sample_received_on'].strftime('%d-%m-%Y')}</td>
+                        % endif
+
+                        <td>
+                            % if frag['nuc_sup'] not in [None, ""]:
+                                <sup>${frag['nuc_sup']}</sup>
+                            % endif
+                            ${frag['nuc_name']}
+                        </td>
+                        <td>${frag['analysis']}</td>
+                        <td>${frag['activity']}</td>
+                        <td>${frag['remarks']}</td>
+                    </tr>
+
+                    % endfor
+                % endfor
+
+                % if len(rows) == 0:
+                    <tr class="has-text-justified">
+                        <td colspan="8">No record found!</td>
+                    </tr>
+                % endif
+            </tbody>
+        </table>
+        
+        <hr/>
+
+        <p class="has-text-justified">${foot_contents}</p>
+        <hr/>
+
+
+        <table style="width: 100%">
+            <tr>
+                <td>
+                    <!--    OIC1    -->
+
+                    % if sign1_encoded_contents is None:
+                        <img class="image" alt="Not yet approved"/>
+                    % endif
+                    % if sign1_encoded_contents is not None:
+                        <img class="image" alt="Image not found!" src="data:image/png;base64,${sign1_encoded_contents}"/>
+                    % endif
+                </td>
+                <td></td>
+                <td class="is-pulled-right mr-6">
+
+                    <!--    OIC2    -->
+
+                    % if sign2_encoded_contents is None:
+                        <img class="image" alt="Not yet approved"/>
+                    % endif
+                    % if sign2_encoded_contents is not None:
+                        <img class="image" alt="Image not found!" src="data:image/png;base64,${sign2_encoded_contents}"/>
+                    % endif
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="is-uppercase ml-2">Officer In Charge</p>
+                    <p class="is-uppercase ml-2">(Bioassay group)</p>
+                </td>
+                <td></td>
+                <td class="is-pulled-right">
+                    <p class="is-uppercase">Head, Internal Dosimetry Section</p>
+                </td>
+            </tr>
+        </table><br/><br/>
+
+
+
+        <article class="media ml-6">
+            <span class="is-uppercase media-left">To:</span>
+            <div class="media-content is-uppercase ml-4">
+                % for r in arrHeadTo:
+                    ${r} <br/>
+                % endfor
+            </div>
+        </article>
+        <br/>
+        <br/>
+    </body>
+</html>

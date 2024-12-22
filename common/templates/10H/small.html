@@ -1,0 +1,360 @@
+## -*- coding: utf-8 -*-
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            <%include file="bulma.min.css"/>
+        </style>
+        <style>
+            th
+            {
+                text-align: left;
+            }
+
+            img
+            {
+                width: 200px;
+                height: 50px;
+            }
+
+            .table.is-borderless td, .table.is-borderless th 
+            {
+                border: 0;
+            }
+
+            .table_morecondensed>thead>tr>th, 
+            .table_morecondensed>tbody>tr>th, 
+            .table_morecondensed>tfoot>tr>th, 
+            .table_morecondensed>thead>tr>td, 
+            .table_morecondensed>tbody>tr>td, 
+            .table_morecondensed>tfoot>tr>td
+            { 
+                padding: 0px;
+                padding-left: 5px;
+                border: 1px solid black;
+            }
+
+            
+        </style>
+    </head>
+    <body>
+        <p class="is-fullwidth has-text-centered subtitle mb-0 has-text-weight-bold is-size-6">BHABHA ATOMIC RESEARCH CENTRE</p>
+        <p class="is-fullwidth has-text-centered subtitle mb-0 has-text-weight-bold is-uppercase is-size-6">${my_division | h}</p>
+        <p class="is-fullwidth has-text-centered subtitle mb-0 has-text-weight-bold is-uppercase is-size-6">${my_section | h}</p>
+        <p class="is-fullwidth has-text-centered subtitle mb-0 has-text-weight-bold is-uppercase is-size-6">Bioassay Group</p>
+        <p class="subtitle has-text-weight-bold mb-0 is-uppercase is-size-6">INSTRUCTIONS</p>
+
+        <table style="width:100%">
+            <tbody>
+                <tr>
+                    <td class="has-text-justified is-size-7" style="width: 48%; position: absolute;">
+                        <strong>
+                            <u>Whole Body Counting</u>: 
+                        </strong>
+                        Before reporting to Whole Body/Lung Monitoring Laboratory, take shower bath in the morning with special care for cleaning hair with soap. 
+                        The monitoring subjects are advised to report directly before reporting to their workplace. Avoid entering in active area on the day of measurement. 
+                        Personnel coming for in vivo measurement are advised not to wear any threads or jewellery.
+                    </td>
+    
+                    <td class="has-text-justified ml-1 is-size-7" style="width: 48%;">
+                        <strong>
+                            <u>Urine/Faecal samples</u>: 
+                        </strong>
+                        Take bath and have complete change of clothes before starting to collect the urine sample. Avoid touching the neck of the bottle and part of the stopper which goes into the neck. 
+                        Hand should be clean and dry while handling the stopper. Collect all urine passed between leaving work and coming back. Workers are advised to submit samples directly to Bioassay laboratory 
+                        before reporting to their workplace.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="is-fullwidth has-text-left mb-0">
+            Name: 
+            <span class="ml-1 has-text-weight-bold is-size-5">${row['person_name'] | h} (${row['worker_type']})</span>
+        </p>
+
+        <table class="table is-bordered is-narrow is-fullwidth table_morecondensed" style="border: 1px solid black">
+            <tbody>
+                <tr>
+                    <td>TLD No.</td>
+                    <td>
+                        % if row['tld'] in [None, ""]:
+                            NOT ISSUED
+                        % endif
+
+                        % if row['tld'] not in [None, ""]:
+                            ${row['tld'].replace('/', '') | h}
+                        % endif
+                    </td>
+
+                    <td>Com. Code</td>
+                    <td>
+                        % if row['compcode'] not in [None, ""]:
+                            ${row['compcode'] | h}
+                        % endif
+                    </td>
+
+                    <td>Employee No.</td>
+                    <td>
+                        % if person_row['empno']:
+                            ${person_row['empno'] | h}
+                        % endif
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Body weight</td>
+                    <td>
+                        % if row['weight']:
+                            ${row['weight'] | h} kg
+                        % endif
+                    </td>
+
+                    <td>Height</td>
+                    <td>
+                        % if row['height']:
+                            ${row['height'] | h} cm
+                        % endif
+                    </td>
+
+                    <td>Chest circumference</td>
+                    <td>
+                        % if row['chest']:
+                            ${row['chest'] | h} cm
+                        % endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date of joining</td>
+                    <td>
+                        % if person_row['doj']:
+                            ${person_row['doj'].strftime('%d-%m-%Y')}
+                        % endif
+                    </td>
+
+                    <td>Age (yrs)</td>
+                    <td>${person_row['age'] | h}</td>
+
+                    <td>Date of birth</td>
+                    <td>
+                        % if person_row['dob']:
+                            ${person_row['dob'].strftime('%d-%m-%Y')}
+                        % endif
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table is-bordered is-narrow is-fullwidth table_morecondensed" style="border: 1px solid black">
+            <tbody>
+                <tr>
+                    <td>Division/Plant</td>
+                    <td style="font-weight: bold; font-size: large">${row['division_name'] | h}/${row['plant_name'] | h}</td>
+                </tr>
+                <tr>
+                    <td>Date of urine/fecal collection</td>
+                    <td>
+                        ${row['collectionDate'].strftime('%d-%m-%Y') | h}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nature and type of process or operation</td>
+                    <td>
+                        % if row['toproc']:
+                            % if 'other' not in row['toproc'].lower():
+                                ${row['toproc'] | h}, ${row['topComments'] | h}
+                            % else:
+                                ${row['topComments'] | h}
+                            % endif
+                        % else:
+                            ${row['topComments'] | h}
+                        % endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>Type of monitoring</td>
+                    <td style="text-transform: uppercase; font-weight: bold; font-size: large" >${row['tom'] | h}</td>
+                </tr>
+                <tr>
+                    <td>Probable date, duration and time of exposure</td>
+                    <td>
+                        % if row['toe']:
+                            ${row['toe'].strftime('%d-%m-%Y')}
+                        % endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>Route of intake</td>
+                    <td>${intake_routes | h}</td>
+                </tr>
+                <tr>
+                    <td>Possible radioactive contaminants</td>
+
+                    <td style="font-weight: bold; font-size: large" >
+                        
+                        <!-- Try splitting the radionuclide -->
+
+                        % for idx, dct in enumerate(nuclides):
+                            <sup>${dct['prefix'] | h}</sup>
+                            ${dct['name'] | h}
+                            <sup>${dct['suffix'] | h}</sup>
+
+                            % if idx < (len(nuclides)-1):
+                                ,
+                            % endif
+                        % endfor
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>Isotopic composition of the contaminants</td>
+                    <td>${row['isotopicComp'] | h}</td>
+                </tr>
+                <tr>
+                    <td>Pu:Am Ratio (if applicable)</td>
+                    <td>${row['puamRatio'] | h}</td>
+                </tr>
+                <tr>
+                    <td>Particle size and solubility type</td>
+                    <td>
+                        ${row['particleSize']} ${row['particleSizeComments']}
+                        % if row['class_name'] not in [None, ""]:
+                            % if 'other' in row['class_name'].lower():
+                                , ${row['class_other']}
+                            % endif
+                            % if 'other' not in row['class_name'].lower():
+                                , ${row['class_name']}
+                            % endif
+                        % endif
+                    </td>    
+                </tr>
+                <tr>
+                    <td>Details of therapeutic treatment, if any</td>
+                    <td>${row['treatmentDetails']}</td>
+                </tr>
+                <tr>
+                    <td>Duration of collection (Urine/Feacal sample)</td>
+                    <td>${row['collectionDuration'] | h}</td>
+                </tr>
+                <tr>
+                    <td>Date of previous monitoring (Monitoring Lab)</td>
+                    <td>
+                        % if row['prev_mon']:
+                            ${row['prev_mon'].strftime('%d-%m-%Y')}
+                        % endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>Last day of iodination work (For Iodine handling)</td>
+                    <td>
+                        % if row['lastIodinationDay']:
+                            ${row['lastIodinationDay'].strftime('%d-%m-%Y')}
+                        % endif
+                    </td>
+                </tr>
+                <tr>
+                    <td>Plant Health Physicist</td>
+                    <td>${row['hp_name']}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+
+        <p style="font-style: italic; font-weight: bold; font-size: small"># In case of Special (incident related) monitoring, the Incident Information note need to accompany this form.</p>
+
+        <table class="table is-bordered is-narrow is-fullwidth table_morecondensed">
+            <tbody>
+                <tr>
+                    <td style="width: 25%">For Lab use only:</td>
+                    <td style="width: 20%"></td>
+                    <td style="width: 30%">Reporting/Submission</td>
+                    <td style="width: 25%">Laboratory</td>
+                </tr>     
+                <tr>
+                    <td>Sample identification no.</td>
+                    <td>
+                        % if mon_row:
+                            ${mon_row['sample_no']}
+                        % endif
+                    </td>
+
+                    <td>Urine/Fecal samples</td>
+                    <td>3-321/317-H, ML; before 12:00 h</td>
+                </tr>
+                <tr>
+                    <td>
+                        % if mon_row:
+                            % if row['sample_type'] != 'Fecal':
+                                Volume of sample (mL)
+                            % endif
+
+                            % if row['sample_type'] == 'Fecal':
+                                Weight of sample (g)
+                            % endif
+                        % endif
+
+                        % if mon_row is None:
+                            Volume of sample (mL)
+                        % endif
+                    </td>
+                    <td>
+                        % if mon_row:
+                            % if row['sample_type'] != 'Fecal':
+                                ${mon_row['sample_vol']}
+                            % endif
+
+                            % if row['sample_type'] == 'Fecal':
+                                ${mon_row['sample_weight']}
+                            % endif
+                        % endif
+                    </td>
+                    
+
+                    <td>HP Token</td>
+                    <td>${row['hpToken']}</td>
+                </tr>
+                <tr>
+                    <td>Date of sample receipt</td>
+                    <td>
+                        % if mon_row:
+                            ${mon_row['received_on'].strftime('%d-%m-%Y')}
+                        % endif
+                    </td>
+                    <td>Observations, if any :</td>
+                    <td>
+                        % if mon_row:
+                            ${mon_row['remarks']}
+                        % endif
+                    </td>
+                    <!-- <td><b>Fission &amp; Activ. products</b></td>
+                    <td><b>B-215, Mod. Labs</b></td> -->
+                </tr>
+                <!-- <tr>
+                    <td><s>Sample receipt date</s></td>
+                    <td>
+                        % if mon_row:
+                            ${mon_row['received_on'].strftime('%d-%m-%Y')}
+                        % endif
+                    </td>
+                    <td><s>Pu/U/Am Lung counting</s></td>
+                    <td><s>BB-34, BARC Hospital</s></td>
+                </tr>
+                <tr>
+                    <td>Observations, if any :</td>
+                    <td>
+                        % if mon_row:
+                            ${mon_row['remarks']}
+                        % endif
+                    </td>
+                    <td><s>I-125 &amp; I-131</s></td>
+                    <td><s>BB-26, BARC Hospital</s></td>
+                </tr> -->
+            </tbody>
+        </table>
+
+        
+    </body>
+</html>

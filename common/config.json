@@ -1,0 +1,52 @@
+{
+    "db_username": "postgres",
+    "db_password": "admin",
+    "db_server_ip": "localhost",
+    "db_name": "RRWBM",
+    "db_port": 5432,
+    "public-key-path": "D:\\Deployed-server-code/RRWBM/micro/common/sso-public-key.pem",
+    "external-algorithm": "RS256",
+    "sso_issuer": "SSO",
+    "sso-token-url": "https://10.15.94.74/sso/backend/oauth2/external-token",
+    "sso_refresh_token_url": "https://10.15.94.74/sso/backend/oauth2/external-token-refresh",
+    "sso_sign_url": "https://10.15.94.74/sso/backend/sign/",
+    "sso-gives-auth-code-on-page": "https://10.15.94.74/rrwbm/static/auth-code-page",
+    "sso-certificate": "D:\\Puneet-Server-Files/nginx-1.25.3/certs/certificate.pem",
+    "external-access-token-expiration-minutes": 5,
+    "external_refresh_token_expiration_minutes": 60,
+
+    "ids-certificate": "D:\\Puneet-Server-Files/nginx-1.25.3/certs/certificate.pem",
+    "my_client_id": "dfdCCrrzzh1n6JbaBhzOSolOA9vgNDScPrUT",
+    "my_client_secret": "BRplR3Lco4azAzaMKGzeUGycP19r1sD5SxNY",
+    "known_client_ids": [
+        "WXHsQ2hHOqrwNuzthIj5gBLuQzdmiTWZNF9Y",
+        "7grRmV7t0CDB6knu7oDIrRRroGqUOglBKQYs",
+        "dfdCCrrzzh1n6JbaBhzOSolOA9vgNDScPrUT"
+    ],
+
+    "ids-base-url": "https://10.15.94.74/ids/backend",
+    "ids-client-id": "7grRmV7t0CDB6knu7oDIrRRroGqUOglBKQYs",
+
+    "local_token_expire_minutes": 5,
+    "local_refresh_token_expire_minutes": 60,
+    "auth_code_expire_minutes": 5,
+    "local_token_secret_key": "±à6èÜGÿã¶PßëMÃOhaß³nEV1aæù0caøÐÈêÄÞ¾",
+    "token_algorithm": "HS256",
+    "token_issuer": "RRWBM",
+    "bcrypt_rounds": 12,
+    "worker-photo-url": "https://10.15.94.74/rrwbm/backend/auth/forwarder/worker-photo",
+    "path-wkthmltopdf-executable": "C:\\Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe",
+    "my_division": "Radiation Safety Systems Division",
+    "my_section": "Internal Dosimetry Section",
+
+    "email-server-ip": "apsara.barc.gov.in",
+    "email-server-port": "25",
+    "email-from": "bioassay@barc.gov.in",
+
+    "redis_ip": "localhost",
+    "redis_port": 6379,
+    "redis_db_number": 3,
+    "cookie-path": "/rrwbm/",
+
+    "data-secret-token": "¶ãpj³ÀÆÖÔ_UÀ«ÎØIÚíü©¬Dù0µGó½OcPûúlWu"
+}
